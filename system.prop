@@ -52,7 +52,6 @@ DEVICE_PROVISIONED=1
 rild.libpath=/vendor/lib64/libril-qc-hal-qmi.so
 ril.subscription.types=RUIM
 ro.telephony.default_cdma_sub=0
-ro.telephony.default_network=22,22
 persist.dbg.volte_avail_ovr=1
 persist.dbg.vt_avail_ovr=1
 persist.radio.NO_STAPA=1
