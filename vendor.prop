@@ -131,6 +131,7 @@ persist.radio.multisim.config=dsds
 persist.vendor.radio.rat_on=combine
 persist.vendor.audio.endcall.delay=600
 persist.vendor.radio.enableadvancedscan=true
+ro.telephony.default_network=22,22
 
 # SurfaceFlinger
 ro.surface_flinger.max_frame_buffer_acquired_buffers=3
