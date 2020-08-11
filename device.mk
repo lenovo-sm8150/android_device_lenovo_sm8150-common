@@ -130,14 +130,11 @@ PRODUCT_PACKAGES += \
 # Camera
 PRODUCT_PACKAGES += \
     android.frameworks.displayservice@1.0 \
-    android.hardware.camera.provider@2.4-impl \
-    android.hardware.camera.provider@2.4-service-lazy_64 \
     libdng_sdk \
     libgui_vendor \
     libqti-perfd-client \
     libxml2 \
-    Snap \
-    vendor.qti.hardware.camera.device@1.0.vendor
+    Snap
 
 # Device init scripts
 PRODUCT_PACKAGES += \
