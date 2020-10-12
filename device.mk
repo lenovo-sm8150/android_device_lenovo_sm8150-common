@@ -168,7 +168,7 @@ PRODUCT_PACKAGES += \
     init.recovery.qcom.rc \
     init.target.rc \
     init.qcom.performance.rc \
-    ueventd.rc
+    ueventd.qcom.rc
 
 # Device-specific settings
 PRODUCT_PACKAGES += \
