@@ -58,6 +58,20 @@ if [ -z "${SRC}" ]; then
     SRC="adb"
 fi
 
+function blob_fixup() {
+    case "${1}" in
+    system_ext/etc/permissions/embms.xml)
+        sed -i 's|/product/framework/embmslibrary.jar|/system/system_ext/framework/embmslibrary.jar|g' "${2}"
+        ;;
+    system_ext/etc/permissions/qcrilhook.xml)
+        sed -i 's|/product/framework/qcrilhook.jar|/system/system_ext/framework/qcrilhook.jar|g' "${2}"
+        ;;
+    system_ext/etc/permissions/telephonyservice.xml)
+        sed -i 's|/system/product/framework/QtiTelephonyServicelibrary.jar|/system/system_ext/framework/QtiTelephonyServicelibrary.jar|g' "${2}"
+        ;;
+    esac
+}
+
 if [ -z "${ONLY_TARGET}" ]; then
     # Initialize the helper for common device
     setup_vendor "${DEVICE_COMMON}" "${VENDOR}" "${ANDROID_ROOT}" true "${CLEAN_VENDOR}"
