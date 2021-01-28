@@ -8,7 +8,7 @@
 
 set -e
 
-DEVICE=zippo
+DEVICE_COMMON=sm8150-common
 VENDOR=lenovo
 
 # Load extract_utils and do some sanity checks
@@ -50,7 +50,7 @@ if [ -z "${SRC}" ]; then
 fi
 
 # Initialize the helper
-setup_vendor "${DEVICE}" "${VENDOR}" "${ANDROID_ROOT}" false "${CLEAN_VENDOR}"
+setup_vendor "${DEVICE_COMMON}" "${VENDOR}" "${ANDROID_ROOT}" false "${CLEAN_VENDOR}"
 
 extract "${MY_DIR}/proprietary-files.txt" "${SRC}" ${KANG} --section "${SECTION}"
 

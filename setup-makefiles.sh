@@ -8,7 +8,7 @@
 
 set -e
 
-DEVICE=zippo
+DEVICE_COMMON=sm8150-common
 VENDOR=lenovo
 
 INITIAL_COPYRIGHT_YEAR=2019
@@ -27,7 +27,7 @@ fi
 source "${HELPER}"
 
 # Initialize the helper
-setup_vendor "${DEVICE}" "${VENDOR}" "${ANDROID_ROOT}"
+setup_vendor "${DEVICE_COMMON}" "${VENDOR}" "${ANDROID_ROOT}"
 
 # Copyright headers and guards
 write_headers
