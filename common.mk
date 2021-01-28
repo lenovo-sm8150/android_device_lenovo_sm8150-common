@@ -13,7 +13,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/product_launched_with_p.mk)
 $(call inherit-product, frameworks/native/build/phone-xhdpi-6144-dalvik-heap.mk)
 
 # Get non-open-source specific aspects
-$(call inherit-product-if-exists, vendor/lenovo/zippo/zippo-vendor.mk)
+$(call inherit-product-if-exists, vendor/lenovo/sm8150-common/sm8150-common-vendor.mk)
 
 # Boot animation
 TARGET_SCREEN_HEIGHT := 2340
@@ -204,7 +204,7 @@ PRODUCT_PACKAGES += \
 
 # Fingerprint
 PRODUCT_PACKAGES += \
-    vendor.lineage.biometrics.fingerprint.inscreen@1.0-service.lenovo_zippo
+    vendor.lineage.biometrics.fingerprint.inscreen@1.0-service.lenovo_msmnile
 
 # FM
 PRODUCT_PACKAGES += \
@@ -255,7 +255,7 @@ PRODUCT_COPY_FILES += \
 
 # Lights
 PRODUCT_PACKAGES += \
-    android.hardware.light@2.0-service.lenovo_zippo
+    android.hardware.light@2.0-service.lenovo_msmnile
 
 # LiveDisplay
 PRODUCT_PACKAGES += \
@@ -304,7 +304,7 @@ PRODUCT_PACKAGES += \
 
 # Power
 PRODUCT_PACKAGES += \
-    android.hardware.power@1.3-service.lenovo_zippo-libperfmgr
+    android.hardware.power@1.3-service.lenovo_msmnile-libperfmgr
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/powerhint.json:$(TARGET_COPY_OUT_VENDOR)/etc/powerhint.json
