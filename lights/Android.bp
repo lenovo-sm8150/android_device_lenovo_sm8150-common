@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2018-2020 The LineageOS Project
+// Copyright (C) 2018 The LineageOS Project
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,9 +16,10 @@
 cc_binary {
     relative_install_path: "hw",
     defaults: ["hidl_defaults"],
-    name: "android.hardware.light@2.0-service.lenovo_sm8150",
-    init_rc: ["android.hardware.light@2.0-service.lenovo_sm8150.rc"],
+    name: "android.hardware.light@2.0-service.lenovo_msmnile",
+    init_rc: ["android.hardware.light@2.0-service.lenovo_msmnile.rc"],
     srcs: ["service.cpp", "Light.cpp"],
+    vendor: true,
     shared_libs: [
         "libbase",
         "libhardware",
@@ -27,5 +28,4 @@ cc_binary {
         "libutils",
         "android.hardware.light@2.0",
     ],
-    proprietary: true,
 }
