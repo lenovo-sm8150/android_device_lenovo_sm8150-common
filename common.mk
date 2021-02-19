@@ -155,7 +155,8 @@ PRODUCT_PACKAGES += \
     init.qcom.sh \
     init.qcom.usb.sh \
     init.qti.fm.sh \
-    init.qti.ims.sh
+    init.qti.ims.sh \
+    uclamp_tuning.sh
 
 PRODUCT_PACKAGES += \
     init.lenovo.common.rc \
