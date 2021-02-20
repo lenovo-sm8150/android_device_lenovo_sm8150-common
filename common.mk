@@ -280,7 +280,8 @@ PRODUCT_PACKAGES += \
 
 # Media
 PRODUCT_PACKAGES += \
-    libavservices_minijail_vendor
+    libavservices_minijail_vendor \
+    libavservices_minijail.vendor
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/media/system_properties.xml:$(TARGET_COPY_OUT_VENDOR)/etc/system_properties.xml
