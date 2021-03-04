@@ -7,6 +7,7 @@ ro.vendor.camera.                                               u:object_r:vendo
 sys.camera.packagename.cts                                      u:object_r:vendor_camera_prop:s0
 sys.camera.packagename.zui                                      u:object_r:vendor_camera_prop:s0
 sys.camera.restart.mark                                         u:object_r:vendor_camera_prop:s0
+sys.tof.cal                                                     u:object_r:vendor_camera_prop:s0
 
 # Lenovo factory props
 sys.bt.address                                                  u:object_r:fac_prop:s0
