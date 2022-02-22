@@ -219,7 +219,7 @@ vendor/etc/qdcm_calib_data_td4328_video_mode_dsi_truly_panel.xml|8507bdb787f0c77
 vendor/etc/qdcm_calib_data_td4330_cmd_mode_dsi_truly_panel.xml|a6f31f4a721999d5ac813ee145572b05967e8ea4
 vendor/etc/qdcm_calib_data_td4330_video_mode_dsi_truly_panel.xml|a6f31f4a721999d5ac813ee145572b05967e8ea4
 
-# DPM
+# DPM - LA.UM.9.1.r1-11500-SMxxx0.0 msmnile-user
 system/framework/tcmclient.jar
 system_ext/bin/dpmd
 system_ext/etc/dpm/dpm.conf
@@ -236,10 +236,10 @@ system_ext/lib64/libdpmfdmgr.so
 system_ext/lib64/libdpmframework.so
 system_ext/lib64/libdpmtcm.so
 -system_ext/priv-app/dpmserviceapp/dpmserviceapp.apk
-vendor/bin/dpmQmiMgr
-vendor/etc/init/dpmQmiMgr.rc
-vendor/lib64/com.qualcomm.qti.dpm.api@1.0.so
-vendor/lib64/libdpmqmihal.so
+vendor/bin/dpmQmiMgr|61a421804559b0e461439c19088acc01b871982a
+vendor/etc/init/dpmQmiMgr.rc|1538743661a5c48c15cd105beaad20f72953885a
+vendor/lib64/com.qualcomm.qti.dpm.api@1.0.so|d9f1aa7f93b928f42499d613d20ccbc60f279097
+vendor/lib64/libdpmqmihal.so|41eb89e66ba065c43a5eb79cd3c72cef0ee167aa
 
 # DRM
 vendor/bin/qseecomd
