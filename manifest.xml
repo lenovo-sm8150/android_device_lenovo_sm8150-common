@@ -626,4 +626,13 @@
         </interface>
         <fqname>@1.0::IIFAADevice/default</fqname>
     </hal>
+    <hal format="hidl">
+        <name>vendor.qti.hardware.mwqemadapter</name>
+        <transport>hwbinder</transport>
+        <version>1.0</version>
+        <interface>
+            <name>IMwqemAdapter</name>
+            <instance>MwqemAdapter</instance>
+        </interface>
+    </hal>
 </manifest>
