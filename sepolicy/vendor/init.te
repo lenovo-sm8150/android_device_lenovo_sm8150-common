@@ -9,3 +9,5 @@ allow init vendor_hal_dpmqmi_hwservice:hwservice_manager find;
 # Allow init to write to sysfs_battery_supply
 allow init sysfs_battery_supply:file setattr;
 allow init vendor_sysfs_battery_supply:file setattr;
+
+allow init property_type:file { append create getattr map open read relabelto rename setattr unlink write };
