@@ -6,4 +6,7 @@ allow platform_app vendor_sysfs_kgsl:file { read open getattr ioctl };
 allow platform_app vendor_sysfs_battery_supply:file { read open getattr ioctl };
 allow platform_app default_android_hwservice:hwservice_manager find;
 
+# Soter
+hal_client_domain(platform_app, vendor_hal_soter);
+
 get_prop(platform_app, vendor_display_notch_prop);
