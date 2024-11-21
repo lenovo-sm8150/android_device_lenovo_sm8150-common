@@ -19,6 +19,13 @@ on init
     chown system system /sys/devices/virtual/touch/tp_dev/double_tap_enable
     chmod 0660 /sys/devices/virtual/touch/tp_dev/double_tap_enable
 
+    # permission for FOD and HBM
+    chown system system /sys/devices/platform/soc/soc:qcom,dsi-display-primary/dimlayer_bl
+    chmod 0666 /sys/devices/platform/soc/soc:qcom,dsi-display-primary/dimlayer_bl
+    chown system system /sys/devices/platform/soc/soc:qcom,dsi-display-primary/dimlayer_hbm
+    chmod 0666 /sys/devices/platform/soc/soc:qcom,dsi-display-primary/dimlayer_hbm
+    chown system system /sys/devices/platform/soc/soc:qcom,dsi-display-primary/fod_ui
+
     # Add factest service
 service factest /vendor/bin/factest
     class main
