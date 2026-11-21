@@ -17,7 +17,10 @@
 #include <poll.h>
 #include <unistd.h>
 
+#include <cerrno>
+#include <cstring>
 #include <fstream>
+#include <string>
 #include <thread>
 
 #define COMMAND_NIT 10
@@ -34,8 +37,23 @@ namespace {
 
 template <typename T>
 static void set(const std::string& path, const T& value) {
+    errno = 0;
     std::ofstream file(path);
+    if (!file.is_open()) {
+        ALOGE("Failed to open %s: %s", path.c_str(), strerror(errno != 0 ? errno : EIO));
+        return;
+    }
+
+    errno = 0;
     file << value;
+    file.flush();
+    if (file.fail()) {
+        ALOGE("Failed to write '%s' to %s: %s", std::to_string(value).c_str(), path.c_str(),
+              strerror(errno != 0 ? errno : EIO));
+        return;
+    }
+
+    ALOGV("Wrote '%s' to %s", std::to_string(value).c_str(), path.c_str());
 }
 
 static bool readBool(int fd) {
