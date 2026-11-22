@@ -27,9 +27,10 @@
 #define PARAM_NIT_FOD 1
 #define PARAM_NIT_NONE 0
 
-#define DIMLAYER_HBM_PATH "/sys/devices/platform/soc/soc:qcom,dsi-display-primary/hbm"
-#define DIMLAYER_HBM_ON 1
-#define DIMLAYER_HBM_OFF 0
+#define HBM_PATH "/sys/devices/platform/soc/soc:qcom,dsi-display-primary/hbm"
+#define FOD_HBM_EN_PATH "/sys/devices/platform/soc/soc:qcom,dsi-display-primary/fod_hbm_en"
+#define HBM_ON 1
+#define HBM_OFF 0
 
 #define FOD_UI_PATH "/sys/devices/platform/soc/soc:qcom,dsi-display-primary/fod_ui"
 
@@ -118,6 +119,12 @@ BiometricsFingerprint::BiometricsFingerprint() : mClientCallback(nullptr), mDevi
                 continue;
             }
 
+            std::lock_guard<std::mutex> lock(mDeviceMutex);
+            if (mDevice == nullptr) {
+                ALOGW("fingerprint device is gone, stopping fod_ui poll");
+                break;
+            }
+
             mDevice->goodixExtendCommand(mDevice, COMMAND_NIT,
                                          readBool(fd) ? PARAM_NIT_FOD : PARAM_NIT_NONE);
         }
@@ -126,6 +133,7 @@ BiometricsFingerprint::BiometricsFingerprint() : mClientCallback(nullptr), mDevi
 
 BiometricsFingerprint::~BiometricsFingerprint() {
     ALOGV("~BiometricsFingerprint()");
+    std::lock_guard<std::mutex> lock(mDeviceMutex);
     if (mDevice == nullptr) {
         ALOGE("No valid device");
         return;
@@ -241,33 +249,40 @@ Return<uint64_t> BiometricsFingerprint::setNotify(
 }
 
 Return<uint64_t> BiometricsFingerprint::preEnroll() {
+    std::lock_guard<std::mutex> lock(mDeviceMutex);
     return mDevice->pre_enroll(mDevice);
 }
 
 Return<RequestStatus> BiometricsFingerprint::enroll(const hidl_array<uint8_t, 69>& hat,
                                                     uint32_t gid, uint32_t timeoutSec) {
     const hw_auth_token_t* authToken = reinterpret_cast<const hw_auth_token_t*>(hat.data());
+    std::lock_guard<std::mutex> lock(mDeviceMutex);
     return ErrorFilter(mDevice->enroll(mDevice, authToken, gid, timeoutSec));
 }
 
 Return<RequestStatus> BiometricsFingerprint::postEnroll() {
     onFingerUp();
+    std::lock_guard<std::mutex> lock(mDeviceMutex);
     return ErrorFilter(mDevice->post_enroll(mDevice));
 }
 
 Return<uint64_t> BiometricsFingerprint::getAuthenticatorId() {
+    std::lock_guard<std::mutex> lock(mDeviceMutex);
     return mDevice->get_authenticator_id(mDevice);
 }
 
 Return<RequestStatus> BiometricsFingerprint::cancel() {
+    std::lock_guard<std::mutex> lock(mDeviceMutex);
     return ErrorFilter(mDevice->cancel(mDevice));
 }
 
 Return<RequestStatus> BiometricsFingerprint::enumerate() {
+    std::lock_guard<std::mutex> lock(mDeviceMutex);
     return ErrorFilter(mDevice->enumerate(mDevice));
 }
 
 Return<RequestStatus> BiometricsFingerprint::remove(uint32_t gid, uint32_t fid) {
+    std::lock_guard<std::mutex> lock(mDeviceMutex);
     return ErrorFilter(mDevice->remove(mDevice, gid, fid));
 }
 
@@ -287,10 +302,12 @@ Return<RequestStatus> BiometricsFingerprint::setActiveGroup(uint32_t gid,
         return RequestStatus::SYS_EINVAL;
     }
 
+    std::lock_guard<std::mutex> lock(mDeviceMutex);
     return ErrorFilter(mDevice->set_active_group(mDevice, gid, mutableStorePath.c_str()));
 }
 
 Return<RequestStatus> BiometricsFingerprint::authenticate(uint64_t operationId, uint32_t gid) {
+    std::lock_guard<std::mutex> lock(mDeviceMutex);
     return ErrorFilter(mDevice->authenticate(mDevice, operationId, gid));
 }
 
@@ -479,6 +496,7 @@ void BiometricsFingerprint::notify(const fingerprint_msg_t* msg) {
 }
 
 Return<int32_t> BiometricsFingerprint::goodixExtendCommand(int32_t cmd, int32_t param) {
+    std::lock_guard<std::mutex> lock(mDeviceMutex);
     return mDevice->goodixExtendCommand(mDevice, cmd, param);
 }
 
@@ -488,12 +506,17 @@ Return<bool> BiometricsFingerprint::isUdfps(uint32_t /* sensorId */) {
 
 Return<void> BiometricsFingerprint::onFingerDown(uint32_t /* x */, uint32_t /* y */,
                                                  float /* minor */, float /* major */) {
-    set(DIMLAYER_HBM_PATH, DIMLAYER_HBM_ON);
+    // hbm enables the FOD dim layer and fod_hbm_en switches the panel into local HBM
+    // without waiting for a dim layer.
+    set(HBM_PATH, HBM_ON);
+    set(FOD_HBM_EN_PATH, HBM_ON);
     return Void();
 }
 
 Return<void> BiometricsFingerprint::onFingerUp() {
-    set(DIMLAYER_HBM_PATH, DIMLAYER_HBM_OFF);
+    // Drop the dim layer first, then the direct HBM switch.
+    set(HBM_PATH, HBM_OFF);
+    set(FOD_HBM_EN_PATH, HBM_OFF);
     return Void();
 }
 

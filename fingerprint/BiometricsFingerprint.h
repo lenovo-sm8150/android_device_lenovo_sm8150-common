@@ -24,6 +24,7 @@
 #include <hidl/MQDescriptor.h>
 #include <hidl/Status.h>
 #include <log/log.h>
+#include <mutex>
 #include <vendor/goodix/extend/service/2.0/IGoodixFPExtendService.h>
 
 #include "fingerprint.h"
@@ -83,6 +84,9 @@ struct BiometricsFingerprint : public IBiometricsFingerprint, public IGoodixFPEx
     static BiometricsFingerprint* sInstance;
 
     std::mutex mClientCallbackMutex;
+    // Serialises access to mDevice between the HIDL thread pool and the detached
+    // fod_ui poll thread.
+    std::mutex mDeviceMutex;
     sp<IBiometricsFingerprintClientCallback> mClientCallback;
     fingerprint_device_t* mDevice;
 

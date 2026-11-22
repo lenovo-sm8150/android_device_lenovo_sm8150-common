@@ -5,10 +5,9 @@ service vendor.fps_hal /vendor/bin/hw/android.hardware.biometrics.fingerprint@2.
 
 # The display driver creates these attributes as root:root, so the HAL (user system)
 # cannot read or write them without an explicit chown. fod_ui is the FOD press
-# notifier; hbm, fod_hbm_en and chen_need_active_hbm_next_frame drive local
-# (dim layer) HBM. Chown on post-fs-data so the display driver has probed first.
+# notifier; hbm and fod_hbm_en drive local (dim layer) HBM. Chown on post-fs-data so
+# the display driver has probed first.
 on post-fs-data
     chown system system /sys/devices/platform/soc/soc:qcom,dsi-display-primary/fod_ui
     chown system system /sys/devices/platform/soc/soc:qcom,dsi-display-primary/hbm
     chown system system /sys/devices/platform/soc/soc:qcom,dsi-display-primary/fod_hbm_en
-    chown system system /sys/devices/platform/soc/soc:qcom,dsi-display-primary/chen_need_active_hbm_next_frame
